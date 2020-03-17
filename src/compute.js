@@ -194,6 +194,10 @@ var Compute;
         return new NumericalObject(a).multiply(new NumericalObject(b)).value;
     }
     Compute.multiply = multiply;
+    function parse(s) {
+        console.log(numParse.parse(s));
+    }
+    Compute.parse = parse;
     // /** Any stated relationship between two or more MathObjects*/
     // interface Relationship { }
     // /** Any stated relationship between two MathObjects*/
