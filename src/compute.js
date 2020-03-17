@@ -168,6 +168,10 @@ var Compute;
         return (new NumericalObject(a).add(new NumericalObject(b))).value;
     }
     Compute.add = add;
+    function multiply(a, b) {
+        return new NumericalObject(a).multiply(new NumericalObject(b)).value;
+    }
+    Compute.multiply = multiply;
     // /** Any stated relationship between two or more MathObjects*/
     // interface Relationship { }
     // /** Any stated relationship between two MathObjects*/
