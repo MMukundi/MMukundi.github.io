@@ -25,8 +25,14 @@ var Compute;
             return new SumObject([this.clone(), mo]);
         }
         multiply(mo) {
+            console.log(mo, mo instanceof ProductObject, this instanceof ProductObject);
             if (mo instanceof NumericalObject) {
                 return new NumericalObject(this.value * mo.value);
+            }
+            else if (mo instanceof ProductObject) {
+                let po = mo.clone();
+                po.factors.push(this.clone());
+                return po;
             }
             return new ProductObject([this.clone(), mo]);
         }
@@ -60,6 +66,11 @@ var Compute;
             // if(mo instanceof VariableObject){
             //     return new VariableObject(this.value*mo.value);
             // }
+            if (mo instanceof ProductObject) {
+                let po = mo.clone();
+                po.factors.push(this.clone());
+                return po;
+            }
             return new ProductObject([this.clone(), mo]);
         }
         equals(mo) {
@@ -97,8 +108,9 @@ var Compute;
         }
         multiply(mo) {
             if (mo instanceof ProductObject) {
-                let addends = this.addends.map((mo_) => mo_.clone().multiply(mo));
-                return new ProductObject(addends);
+                let po = mo.clone();
+                po.factors.push(this.clone());
+                return po;
             }
             return new ProductObject([this.clone(), mo]);
         }
@@ -141,7 +153,7 @@ var Compute;
             return new SumObject([this.clone(), mo]);
         }
         multiply(mo) {
-            console.log(mo, mo instanceof ProductObject);
+            console.log(mo, mo instanceof ProductObject, this instanceof ProductObject);
             if (mo instanceof ProductObject) {
                 let factors = this.factors.map((mo_) => mo_.clone());
                 factors.push(...mo.factors.map((mo_) => mo_.clone()));
