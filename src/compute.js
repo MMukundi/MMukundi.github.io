@@ -45,8 +45,8 @@ var Compute;
     /**The most basic represvariable parts of any Chunk of any sort*/
     class VariableObject {
         constructor(s, sub) {
-            this.symbol = ((s!==undefined)&&s.length === 1 && !s.includes("_")) ? s : "x";
-            this.subscript = ((sub!==undefined)&&!sub.includes("_")) ? sub : "";
+            this.symbol = (s.length === 1 && !s.includes("_")) ? s : "x";
+            this.subscript = (!sub.includes("_")) ? sub : "";
         }
         add(mo) {
             if (mo instanceof SumObject) {
@@ -141,6 +141,7 @@ var Compute;
             return new SumObject([mo, this]);
         }
         multiply(mo) {
+            console.log(mo, mo instanceof ProductObject);
             if (mo instanceof ProductObject) {
                 let factors = this.factors.map((mo_) => mo_.clone());
                 factors.push(...mo.factors.map((mo_) => mo_.clone()));
@@ -174,7 +175,7 @@ var Compute;
     }
     Compute.add = add;
     function multiply(a, b) {
-        return (new NumericalObject(a).multiply(new NumericalObject(b))).value;
+        return new NumericalObject(a).multiply(new NumericalObject(b)).value;
     }
     Compute.multiply = multiply;
     // /** Any stated relationship between two or more MathObjects*/
