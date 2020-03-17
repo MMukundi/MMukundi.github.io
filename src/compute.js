@@ -169,7 +169,7 @@ var Compute;
                 let match = true;
                 for (let factor of this.factors) {
                     let index = mo.factors.findIndex((factor_, i) => (!indexesMatched.has(i) && factor_.equals(factor)));
-                    console.log("i", index);
+                    console.log("i", index, factor, mo.factors[index]);
                     if (index == -1) {
                         match = false;
                         break;
