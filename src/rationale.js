@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const compute_1 = require("./compute");
-const comprehend_1 = require("./comprehend");
+var compute_1 = require("./compute");
+var comprehend_1 = require("./comprehend");
 var Rationale;
 (function (Rationale) {
     Rationale.version = "0.01";
