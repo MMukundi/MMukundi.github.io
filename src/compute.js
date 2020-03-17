@@ -106,7 +106,7 @@ var Compute;
                 return new SumObject(addends);
             }
             let clone = this.clone();
-            clone.addends.push(mo);
+            clone.addends.push(mo.clone());
             return clone;
         }
         multiply(mo) {
@@ -163,7 +163,7 @@ var Compute;
                 return new ProductObject(factors);
             }
             let clone = this.clone();
-            clone.factors.push(mo);
+            clone.factors.push(mo.clone());
             return clone;
         }
         equals(mo) {
