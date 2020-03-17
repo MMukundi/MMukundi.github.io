@@ -22,13 +22,13 @@ var Compute;
                 moClone.addends.push(this.clone());
                 return moClone;
             }
-            return new SumObject([mo, this]);
+            return new SumObject([this.clone(), mo]);
         }
         multiply(mo) {
             if (mo instanceof NumericalObject) {
                 return new NumericalObject(this.value * mo.value);
             }
-            return new ProductObject([mo, this]);
+            return new ProductObject([this.clone(), mo]);
         }
         equals(mo) {
             if (mo instanceof NumericalObject) {
@@ -54,13 +54,13 @@ var Compute;
                 moClone.addends.push(this.clone());
                 return moClone;
             }
-            return new SumObject([mo, this]);
+            return new SumObject([this.clone(), mo]);
         }
         multiply(mo) {
             // if(mo instanceof VariableObject){
             //     return new VariableObject(this.value*mo.value);
             // }
-            return new ProductObject([mo, this]);
+            return new ProductObject([this.clone(), mo]);
         }
         equals(mo) {
             if (mo instanceof VariableObject) {
@@ -93,14 +93,14 @@ var Compute;
                 addends.push(...mo.addends.map((mo_) => mo_.clone()));
                 return new SumObject(addends);
             }
-            return new SumObject([mo, this]);
+            return new SumObject([this.clone(), mo]);
         }
         multiply(mo) {
             if (mo instanceof ProductObject) {
                 let addends = this.addends.map((mo_) => mo_.clone().multiply(mo));
                 return new ProductObject(addends);
             }
-            return new ProductObject([mo, this]);
+            return new ProductObject([this.clone(), mo]);
         }
         distribute(mo) {
             let addends = this.addends.map((mo_) => mo_.clone().multiply(mo));
@@ -138,7 +138,7 @@ var Compute;
                 moClone.addends.push(this.clone());
                 return moClone;
             }
-            return new SumObject([mo, this]);
+            return new SumObject([this.clone(), mo]);
         }
         multiply(mo) {
             console.log(mo, mo instanceof ProductObject);
@@ -147,7 +147,7 @@ var Compute;
                 factors.push(...mo.factors.map((mo_) => mo_.clone()));
                 return new ProductObject(factors);
             }
-            return new ProductObject([mo, this]);
+            return new ProductObject([this.clone(), mo]);
         }
         equals(mo) {
             if (mo instanceof ProductObject) {
