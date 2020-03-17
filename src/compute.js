@@ -196,7 +196,7 @@ var Compute;
     Compute.multiply = multiply;
     function parse(s) {
         let tree = numParse.parse(s);
-        process(tree);
+        return process(tree);
     }
     Compute.parse = parse;
     function process(tree) {
