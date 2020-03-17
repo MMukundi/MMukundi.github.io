@@ -41,6 +41,7 @@ var Compute;
         }
         ;
     }
+    Compute.NumericalObject = NumericalObject;
     /**The most basic represvariable parts of any Chunk of any sort*/
     class VariableObject {
         constructor(s, sub) {
@@ -76,9 +77,11 @@ var Compute;
             return this.symbol + "_" + this.subscript;
         }
     }
+    Compute.VariableObject = VariableObject;
     /** The mapping of all named variables to their MathObjects */
     class VariableMap extends Map {
     }
+    Compute.VariableMap = VariableMap;
     class SumObject {
         constructor(adds) {
             this.addends = [];
@@ -123,6 +126,7 @@ var Compute;
         }
         ;
     }
+    Compute.SumObject = SumObject;
     class ProductObject {
         constructor(fs) {
             this.factors = [];
@@ -164,12 +168,13 @@ var Compute;
         }
         ;
     }
+    Compute.ProductObject = ProductObject;
     function add(a, b) {
         return (new NumericalObject(a).add(new NumericalObject(b))).value;
     }
     Compute.add = add;
     function multiply(a, b) {
-        return new NumericalObject(a).multiply(new NumericalObject(b)).value;
+        return (new NumericalObject(a).multiply(new NumericalObject(b))).value;
     }
     Compute.multiply = multiply;
     // /** Any stated relationship between two or more MathObjects*/
