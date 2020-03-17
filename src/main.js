@@ -7,6 +7,6 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var Rationale = __importStar(require("./rationale"));
+const Rationale = __importStar(require("./rationale"));
 console.log(Rationale.Rationale.Compute.add(1, 2));
 console.log(Rationale.Rationale.Comprehend.isTrue(false));
