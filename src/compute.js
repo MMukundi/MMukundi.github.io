@@ -45,8 +45,8 @@ var Compute;
     /**The most basic represvariable parts of any Chunk of any sort*/
     class VariableObject {
         constructor(s, sub) {
-            this.symbol = (s.length === 1 && !s.includes("_")) ? s : "x";
-            this.subscript = (!sub.includes("_")) ? sub : "";
+            this.symbol = ((s !== undefined) && s.length === 1 && !s.includes("_")) ? s : "x";
+            this.subscript = ((sub !== undefined) && !sub.includes("_")) ? sub : "";
         }
         add(mo) {
             if (mo instanceof SumObject) {
