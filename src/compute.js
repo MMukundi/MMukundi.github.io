@@ -2,8 +2,185 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var Compute;
 (function (Compute) {
+    /** The Heirarcy of operations:
+     * Addition will call Sum addition if possible
+     * Multiplication will call Product multiplication if possible
+     */
+    /**The most basic numerical parts of any Chunk of any sort*/
+    class NumericalObject {
+        constructor(v) {
+            /** The numerical value associated with this object (default = 1)*/
+            this.value = 1;
+            this.value = v;
+        }
+        add(mo) {
+            if (mo instanceof NumericalObject) {
+                return new NumericalObject(this.value + mo.value);
+            }
+            else if (mo instanceof SumObject) {
+                let moClone = mo.clone();
+                moClone.addends.push(this.clone());
+                return moClone;
+            }
+            return new SumObject([mo, this]);
+        }
+        multiply(mo) {
+            if (mo instanceof NumericalObject) {
+                return new NumericalObject(this.value * mo.value);
+            }
+            return new ProductObject([mo, this]);
+        }
+        equals(mo) {
+            if (mo instanceof NumericalObject) {
+                return mo.value === this.value;
+            }
+            return false;
+        }
+        clone() {
+            return new NumericalObject(this.value);
+        }
+        ;
+    }
+    /**The most basic represvariable parts of any Chunk of any sort*/
+    class VariableObject {
+        constructor(s, sub) {
+            this.symbol = (s.length === 1 && !s.includes("_")) ? s : "x";
+            this.subscript = (!sub.includes("_")) ? sub : "";
+        }
+        add(mo) {
+            if (mo instanceof SumObject) {
+                let moClone = mo.clone();
+                moClone.addends.push(this.clone());
+                return moClone;
+            }
+            return new SumObject([mo, this]);
+        }
+        multiply(mo) {
+            // if(mo instanceof VariableObject){
+            //     return new VariableObject(this.value*mo.value);
+            // }
+            return new ProductObject([mo, this]);
+        }
+        equals(mo) {
+            if (mo instanceof VariableObject) {
+                return this.symbol === mo.symbol && this.subscript === mo.subscript;
+            }
+            return false;
+        }
+        clone() {
+            return new VariableObject(this.symbol, this.subscript);
+        }
+        ;
+        /** Produces the string representation the variable in the form "symbol_subscript" */
+        toString() {
+            return this.symbol + "_" + this.subscript;
+        }
+    }
+    /** The mapping of all named variables to their MathObjects */
+    class VariableMap extends Map {
+    }
+    class SumObject {
+        constructor(adds) {
+            this.addends = [];
+            this.addends = adds;
+        }
+        add(mo) {
+            if (mo instanceof SumObject) {
+                let addends = this.addends.map((mo_) => mo_.clone());
+                addends.push(...mo.addends.map((mo_) => mo_.clone()));
+                return new SumObject(addends);
+            }
+            return new SumObject([mo, this]);
+        }
+        multiply(mo) {
+            if (mo instanceof ProductObject) {
+                let addends = this.addends.map((mo_) => mo_.clone().multiply(mo));
+                return new ProductObject(addends);
+            }
+            return new ProductObject([mo, this]);
+        }
+        distribute(mo) {
+            let addends = this.addends.map((mo_) => mo_.clone().multiply(mo));
+            return new ProductObject(addends);
+        }
+        equals(mo) {
+            if (mo instanceof SumObject) {
+                let indexesMatched = new Set();
+                let match = true;
+                for (let addend of this.addends) {
+                    let index = mo.addends.findIndex((addend_, i) => (!indexesMatched.has(i) && addend_.equals(addend)));
+                    if (index == -1) {
+                        match = false;
+                        break;
+                    }
+                }
+                return match;
+            }
+            return false;
+        }
+        clone() {
+            return new SumObject(this.addends.map((mo) => mo.clone()));
+        }
+        ;
+    }
+    class ProductObject {
+        constructor(fs) {
+            this.factors = [];
+            this.factors = fs;
+        }
+        add(mo) {
+            if (mo instanceof SumObject) {
+                let moClone = mo.clone();
+                moClone.addends.push(this.clone());
+                return moClone;
+            }
+            return new SumObject([mo, this]);
+        }
+        multiply(mo) {
+            if (mo instanceof ProductObject) {
+                let factors = this.factors.map((mo_) => mo_.clone());
+                factors.push(...mo.factors.map((mo_) => mo_.clone()));
+                return new ProductObject(factors);
+            }
+            return new ProductObject([mo, this]);
+        }
+        equals(mo) {
+            if (mo instanceof ProductObject) {
+                let indexesMatched = new Set();
+                let match = true;
+                for (let factor of this.factors) {
+                    let index = mo.factors.findIndex((factor_, i) => (!indexesMatched.has(i) && factor_.equals(factor)));
+                    if (index == -1) {
+                        match = false;
+                        break;
+                    }
+                }
+                return match && indexesMatched.size == mo.factors.length;
+            }
+            return false;
+        }
+        clone() {
+            return new ProductObject(this.factors.map((mo) => mo.clone()));
+        }
+        ;
+    }
     function add(a, b) {
-        return a + b;
+        return (new NumericalObject(a).add(new NumericalObject(b))).value;
     }
     Compute.add = add;
+    // /** Any stated relationship between two or more MathObjects*/
+    // interface Relationship { }
+    // /** Any stated relationship between two MathObjects*/
+    // interface BinaryRelationship<L extends MathObject, R extends MathObject> extends Relationship { }
+    // /** Any change to any given MathObject(s)*/
+    // interface Operator {
+    //     operate: Function;
+    // }
+    // /** Any change to two MathObject(s)*/
+    // class BinaryOperator implements Operator {
+    //     operate: (l: MathObject, r: MathObject) => MathObject;
+    //     constructor(f: (l: MathObject, r: MathObject) => MathObject) {
+    //         this.operate = f;
+    //     }
+    // }
 })(Compute = exports.Compute || (exports.Compute = {}));
