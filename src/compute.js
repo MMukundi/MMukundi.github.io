@@ -30,6 +30,7 @@ var Compute;
                 return new NumericalObject(this.value * mo.value);
             }
             else if (mo instanceof ProductObject) {
+                console.log("MING to exist");
                 let po = mo.clone();
                 po.factors.push(this.clone());
                 return po;
