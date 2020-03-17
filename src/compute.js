@@ -25,12 +25,10 @@ var Compute;
             return new SumObject([this.clone(), mo]);
         }
         multiply(mo) {
-            console.log(mo, mo instanceof ProductObject, this instanceof ProductObject);
             if (mo instanceof NumericalObject) {
                 return new NumericalObject(this.value * mo.value);
             }
             else if (mo instanceof ProductObject) {
-                console.log("MING to exist");
                 let po = mo.clone();
                 po.factors.push(this.clone());
                 return po;
@@ -156,7 +154,6 @@ var Compute;
             return new SumObject([this.clone(), mo]);
         }
         multiply(mo) {
-            console.log(mo, mo instanceof ProductObject, this instanceof ProductObject);
             if (mo instanceof ProductObject) {
                 let factors = this.factors.map((mo_) => mo_.clone());
                 factors.push(...mo.factors.map((mo_) => mo_.clone()));
