@@ -195,13 +195,24 @@ var Compute;
     }
     Compute.multiply = multiply;
     function parse(s) {
-        console.log(numParse.parse(s));
+        let tree = numParse.parse(s);
+        process(tree);
     }
     Compute.parse = parse;
-
-    //const n1 = new Compute.ProductObject([new Compute.NumericalObject(2),new Compute.VariableObject("c")]);const n2 = new Compute.NumericalObject(2);console.log(n1.multiply(n2).equals(n2.multiply(n1)))
-
-
+    function process(tree) {
+        if (tree.type !== "num") {
+            let l = process(tree.l);
+            let r = process(tree.r);
+            switch (tree.type) {
+                case "*": return new ProductObject([l, r]);
+                case "+": return new SumObject([l, r]);
+                case "-": return new SumObject([l, r.multiply(new NumericalObject(-1))]);
+                //case "+":return new SumObject([l,r])
+            }
+        }
+        return new NumericalObject(tree.val);
+    }
+    Compute.process = process;
     // /** Any stated relationship between two or more MathObjects*/
     // interface Relationship { }
     // /** Any stated relationship between two MathObjects*/
