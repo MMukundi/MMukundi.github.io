@@ -198,6 +198,10 @@ var Compute;
         console.log(numParse.parse(s));
     }
     Compute.parse = parse;
+
+    //const n1 = new Compute.ProductObject([new Compute.NumericalObject(2),new Compute.VariableObject("c")]);const n2 = new Compute.NumericalObject(2);console.log(n1.multiply(n2).equals(n2.multiply(n1)))
+
+
     // /** Any stated relationship between two or more MathObjects*/
     // interface Relationship { }
     // /** Any stated relationship between two MathObjects*/
