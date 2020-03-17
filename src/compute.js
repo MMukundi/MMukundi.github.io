@@ -129,6 +129,7 @@ var Compute;
                         match = false;
                         break;
                     }
+                    indexesMatched.add(index);
                 }
                 return match;
             }
@@ -174,6 +175,7 @@ var Compute;
                         match = false;
                         break;
                     }
+                    indexesMatched.add(index);
                 }
                 return match && indexesMatched.size == mo.factors.length;
             }
